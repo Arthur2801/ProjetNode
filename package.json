@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Arthur2801/ProjetNode/issues"
   },
-  "homepage": "https://github.com/Arthur2801/ProjetNode#readme"
+  "homepage": "https://github.com/Arthur2801/ProjetNode#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
