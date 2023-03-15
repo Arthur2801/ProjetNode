@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<title> Formu </title>
+		<script>
+			
+			
+			function envoi(){
+				
+					var body = {"URI": document.getElementById('IdURI').value, 
+								"Commentaire": document.getElementById('IdCommentaire').value};
+					var route = "/annotation";
+					fetch(route, {    method:'POST', 
+									  body: JSON.stringify(body) ,
+									  headers:{'Content-Type': 'application/json'},
+									  mode:"cors"
+								}).then((res) => res.text()).then((text) => {
+										document.getElementById('IdURI').value="";
+										document.getElementById('IdCommentaire').value="";
+										document.getElementById('Message').innerHTML = text;
+																			});
+	
+			};
+
+			function recup1(){
+				var Annot = document.getElementById('IdAnnot').value;
+				var FormatIdAnnot = document.getElementById('FormatIdAnnot').value;
+				var route = "/IdAnnot/"+Annot;
+				if (FormatIdAnnot=='json'){
+					FormatIdAnnot='application/'+FormatIdAnnot;
+				}
+				else {
+					FormatIdAnnot='text/'+FormatIdAnnot;
+				}
+				fetch(route, {method:'GET',
+							  headers : {'accept' : FormatIdAnnot}
+							  });
+			};
+
+			function recupAnnoURI(){
+				
+				var RecupAnnotURI = document.getElementById('RecupAnnotURI').value;
+				var FormatRecupAnnotURI = document.getElementById('FormatRecupAnnotURI').value;
+				
+				if (FormatRecupAnnotURI=='json'){
+					FormatRecupAnnotURI='application/'+FormatRecupAnnotURI;
+				}
+				else {
+					FormatRecupAnnotURI='text/'+FormatRecupAnnotURI;
+				}
+
+				var route = "/URI/"+RecupAnnotURI;
+				fetch(route, {method:'GET', 
+							  headers : {'accept' : FormatRecupAnnotURI}
+							  });
+			};
+
+			function recupALL(){
+				var FormatAllAnnot = document.getElementById('FormatAllAnnot').value;
+				if (FormatAllAnnot=='json'){
+					FormatAllAnnot='application/'+FormatAllAnnot;
+				}
+				else {
+					FormatAllAnnot='text/'+FormatAllAnnot;
+				}
+
+				var route = "/ALL";
+				fetch(route, {method:'GET', 
+							  headers : {'accept' : FormatAllAnnot}
+							  });
+			};
+		
+		</script>
+	</head>
+	<body>
+
+		<form autocomplete="off">
+			<div>
+				<p>
+					<h1>Création annotation</h1>
+					<label for="URI">URI :</label>
+					<input type="text" name="URI" id="IdURI" placeholder="" size="30" maxlength="50">
+				</p>
+				<p>
+					<label for="Commentaire">Ajoutez commentaire</label><br>
+					<textarea name="Commentaire" id="IdCommentaire" size="30"></textarea>
+					<button onclick="envoi()" type="button">Envoyer</button>
+				</p>
+			</div>
+			<p id="Message"></p>
+			<div>
+				<p>
+					<h1>Récupération annotation</h1>
+					<p>
+						-----------------------------------------------------------
+					</p>
+					<label for="Recup1annotation">Indiquez l'id de l'annotation</label><br>
+					<input type="text" name="Récupérer une annotation" id="IdAnnot" placeholder="" size="30" maxlength="20">
+					<p>
+						<label for="FormatIdAnnot">Choisissez le format de réponse</label><br>
+						<select name="Format" id="FormatIdAnnot">
+							<option value="html">html</option>
+							<option value="json">Json</option>
+						</select>
+					</p>
+					<button onclick="recup1()" type="button">Récupérer</button>
+				</p>
+				<p>
+					-----------------------------------------------------------
+				</p>
+				<p>
+					<label for="RecupannotationsURI">Indiquez l'URI</label><br>
+					<input type="text" name="Récupérer les annotations d'une URI" id="RecupAnnotURI" placeholder="" size="30" maxlength="40">
+					<p>
+					<label for="FormatRecupAnnotURI">Choisissez le format de réponse</label><br>
+						<select name="Format" id="FormatRecupAnnotURI">
+							<option value="html">html</option>
+							<option value="json">Json</option>
+						</select>
+					</p>
+					<p><button onclick="recupAnnoURI()" type="button">Récupérer</button></p>
+					
+				</p>
+				<p>
+					-----------------------------------------------------------
+				</p>
+				<p>
+					<label for="FormatAllAnnot">Choisissez le format de réponse</label><br>
+					<select name="Format" id="FormatAllAnnot">
+						<option value="html">html</option>
+						<option value="json">Json</option>
+					</select>
+				</p>
+				<p>
+					<button onclick="recupALL()" type="button">Récupérer toutes les annotations</button>
+				</p>
+				<p>
+					-----------------------------------------------------------
+				</p>
+			</div>
+		</form>
+		<div id="commentaires"></div>
+	</body>
+</html>
