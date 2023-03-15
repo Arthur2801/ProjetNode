@@ -22,7 +22,6 @@ app.post("/annotation", function(req, res){
 
 app.get("/IdAnnot/:Annot", function(req, res){
 	var IdAnnot = req.params.Annot;
-	var Exist=Object.keys(data).includes(IdAnnot);
 
 	res.format ({
 		   'text/html': function() {
